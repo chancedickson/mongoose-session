@@ -3,7 +3,7 @@ var MongooseSession = function (mongoose, options) {
     /** Default options **/
 
     options = options || {};
-    options.model = options.model || 'Session'
+    options.modelName = options.modelName || 'Session';
     options.ttl = options.ttl || 3600;
 
     /** Inherits express session prototype store **/
@@ -17,7 +17,7 @@ var MongooseSession = function (mongoose, options) {
         createdAt: (options.ttl ? { type: Date, expires: options.ttl } : Date)
     });
 
-    this.SessionModel = mongoose.model(options.model, sessionSchema);
+    this.SessionModel = mongoose.model(options.modelName, sessionSchema);
 
     this.get = function(sid, callback) {
         callback = callback || function() {};
