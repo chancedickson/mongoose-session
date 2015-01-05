@@ -5,6 +5,7 @@ var MongooseSession = function (mongoose, options) {
     options = options || {};
     options.modelName = options.modelName || 'Session';
     options.ttl = options.ttl || 3600;
+	options.collection = options.collection || 'sessions';
 
     /** Inherits express session prototype store **/
 
@@ -15,7 +16,9 @@ var MongooseSession = function (mongoose, options) {
         _id: String,
         session: mongoose.Schema.Types.Mixed,
         createdAt: (options.ttl ? { type: Date, expires: options.ttl } : Date)
-    });
+    }, {
+		collection: options.collection
+	});
 
     this.SessionModel = mongoose.model(options.modelName, sessionSchema);
 
